@@ -69,5 +69,15 @@ public class Stock {
 				+ "]";
 	}
 
+	public Stock(String id, String productId, Integer quantity) {
+		super();
+		this.id = id;
+		this.productId = productId;
+		this.quantity = quantity;
+	}
+	
+	public Stock() {
+	}
+
 	
 }

@@ -1,5 +1,7 @@
 package com.commerce.stock.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +64,10 @@ public class StockService {
 			throw new ProductNotFoundException();
 		
 		return new Product (stock);		
+	}
+	
+	public List<Stock> top3(){
+		
+		return repo.findTop3ByOrderByQuantityDesc();
 	}
 }
