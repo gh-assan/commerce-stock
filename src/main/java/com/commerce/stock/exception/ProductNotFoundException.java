@@ -2,20 +2,20 @@ package com.commerce.stock.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class OutdatedStockException extends Exception implements HasCode {
+public class ProductNotFoundException extends Exception implements HasCode{
 	
 	private static final long serialVersionUID = 1L;
 	
 	
-	
 	@Override 
 	public String getMessage() {
-		return "outdated stock, because a newer stock was processed first";
+		return "product Not found";
 	}
-	
+
 	@Override
 	public HttpStatus getCode() {
 		// TODO Auto-generated method stub
-		 return HttpStatus.NO_CONTENT;
+		return HttpStatus.NOT_FOUND;
 	}
+	
 }

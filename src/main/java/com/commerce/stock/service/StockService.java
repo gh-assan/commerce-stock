@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.commerce.stock.entity.Stock;
 import com.commerce.stock.exception.OutdatedStockException;
+import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.repository.StockRepository;
+import com.commerce.stock.valueObject.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -50,5 +52,15 @@ public class StockService {
 		stock = repo.save(stock);
 		
 		return stock;
+	}
+	
+	public Product getProduct(String productId) throws ProductNotFoundException{
+		
+		Stock stock = repo.findByProductId(productId);
+		
+		if (stock == null)
+			throw new ProductNotFoundException();
+		
+		return new Product (stock);		
 	}
 }

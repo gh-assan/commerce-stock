@@ -1,13 +1,19 @@
 package com.commerce.stock.api;
 
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +24,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.commerce.stock.entity.Stock;
+import com.commerce.stock.exception.HasCode;
 import com.commerce.stock.exception.OutdatedStockException;
+import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.service.StockService;
+import com.commerce.stock.valueObject.Product;
 
 
 @RestController
@@ -32,7 +41,7 @@ public class StockController {
 	@Autowired
 	private StockService service;
 	
-	
+	/*
 	@RequestMapping(value = "/stock",
             method = RequestMethod.GET,
             		produces = MediaType.APPLICATION_JSON_VALUE
@@ -42,6 +51,18 @@ public class StockController {
     Stock getStock(@RequestParam("productId") String productId)  
 	{
 		return this.repo.findByProductId(productId);
+    }
+    */
+	
+	@RequestMapping(value = "/stock",
+            method = RequestMethod.GET,
+            		produces = MediaType.APPLICATION_JSON_VALUE
+            		)
+    @ResponseStatus(HttpStatus.OK)
+	public
+    Product getProduct(@RequestParam("productId") String productId) throws ProductNotFoundException  
+	{
+		return this.service.getProduct(productId);
     }
 	
 	@RequestMapping(value = "/updateStock",
@@ -74,11 +95,18 @@ public class StockController {
 
 	@ExceptionHandler
 	@ResponseBody
-	String handleIllegalArgumentException(OutdatedStockException e, HttpServletResponse response) throws IOException {
-	    response.sendError(e.CODE);
-	    //response.getWriter().append(e.getMessage());
+	public ResponseEntity<Object> exceptionHandler(Exception e, HttpServletResponse response) throws IOException {
 	    
-	    return e.getMessage();
+		Map<String,String> responseBody = new HashMap<>();
+		 responseBody.put("message",e.getMessage());
+	        
+		
+		if (e instanceof HasCode ) {
+			return new ResponseEntity<Object>(responseBody,  ((HasCode) e).getCode() );
+		}
+		
+		return new ResponseEntity<Object>(responseBody, HttpStatus.BAD_REQUEST );
+		
 	}
 
 }
