@@ -52,6 +52,7 @@ public class StockService {
 				String oldTimeStamp = objectMapper.writeValueAsString(previous.getTimestamp());
 				String newtimestamp = objectMapper.writeValueAsString(stock.getTimestamp());
 				System.out.println(oldTimeStamp + " ==  " +newtimestamp);
+				System.out.println(previous.getTimestamp() + " ==  " +stock.getTimestamp());
 				if (!oldTimeStamp.equals(newtimestamp)) {					
 					throw new OutdatedStockException();
 				}

@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import com.commerce.stock.entity.Stock;
+import com.commerce.stock.util.JsonDateSerializer;
 import com.commerce.stock.util.JsonProductSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -21,7 +22,7 @@ public class Product {
 		this.requestTimestamp =  Date.from(utc.toInstant());
 	}
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getRequestTimestamp() {
 		return requestTimestamp;
 	}

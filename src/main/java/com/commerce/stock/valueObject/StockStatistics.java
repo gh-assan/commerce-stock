@@ -35,6 +35,13 @@ public class StockStatistics {
 	public List<SoldProduct> getTopSellingProducts() {
 		return topSellingProducts;
 	}
+
+
+	@Override
+	public String toString() {
+		return "StockStatistics [requestTimestamp=" + requestTimestamp + ", range=" + range + ", topAvailableProducts="
+				+ topAvailableProducts + ", topSellingProducts=" + topSellingProducts + "]";
+	}
 	
 	
 

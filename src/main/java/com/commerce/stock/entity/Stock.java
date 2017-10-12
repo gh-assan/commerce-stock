@@ -30,7 +30,7 @@ public class Stock {
 		this.id = id;
 	}
 
-	//@JsonSerialize(using=JsonDateSerializer.class) 
+	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getTimestamp() {
 		return timestamp;
 	}

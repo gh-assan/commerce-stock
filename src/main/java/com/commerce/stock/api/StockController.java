@@ -28,8 +28,10 @@ import com.commerce.stock.exception.HasCode;
 import com.commerce.stock.exception.OutdatedStockException;
 import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.repository.StockRepository;
+import com.commerce.stock.service.StatisticsService;
 import com.commerce.stock.service.StockService;
 import com.commerce.stock.valueObject.Product;
+import com.commerce.stock.valueObject.StockStatistics;
 
 
 @RestController
@@ -40,6 +42,9 @@ public class StockController {
 	
 	@Autowired
 	private StockService service;
+	
+	@Autowired
+	private StatisticsService statisticsService;
 	
 	/*
 	@RequestMapping(value = "/stock",
@@ -87,9 +92,9 @@ public class StockController {
             		)
     @ResponseStatus(HttpStatus.OK)
 	public
-    Stock statistics(@RequestParam("time") String time)  
+    StockStatistics statistics(@RequestParam("time") String time) throws Exception  
 	{
-		return this.repo.findByProductId(time);
+		return statisticsService.stockStatistics(time);
     }
 	
 

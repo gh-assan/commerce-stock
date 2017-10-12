@@ -1,6 +1,7 @@
 package com.commerce.stock.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import com.commerce.stock.entity.SoldItem;
 import com.commerce.stock.entity.Stock;
 import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.valueObject.SoldProduct;
+import com.commerce.stock.valueObject.StockStatistics;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -97,5 +99,44 @@ public class StatisticsServiceTest {
 
 		
 	}
-
+	
+	
+	@Test
+	public void StatTest() throws Exception {
+		
+		Stock stock1 = new Stock("000001","top1",100);
+		Stock stock2 = new Stock("000002","top2",100);
+		Stock stock3 = new Stock("000003","top3",100);
+		Stock stock4 = new Stock("000004","top4",100);
+	
+		
+		stock1 = stockService.updateStock(stock1);
+		stock2 = stockService.updateStock(stock2);
+		stock3 = stockService.updateStock(stock3);
+		stock4 = stockService.updateStock(stock4);
+		
+		stock1.setQuantity(90);
+		stock2.setQuantity(80);
+		stock3.setQuantity(70);
+		stock4.setQuantity(60);
+		
+		stock1 = stockService.updateStock(stock1);
+		stock2 = stockService.updateStock(stock2);
+		stock3 = stockService.updateStock(stock3);
+		stock4 = stockService.updateStock(stock4);
+		
+		
+		StockStatistics s = statisticsService.stockStatistics("today");
+		
+		System.out.println(s);
+		
+		assertNotEquals(null, s);
+		
+		assertEquals(3, s.getTopAvailableProducts().size());
+		assertEquals(3, s.getTopSellingProducts().size());
+		
+		assertEquals(90, s.getTopAvailableProducts().get(0).getQuantity().intValue());
+		assertEquals(40, s.getTopSellingProducts().get(0).getQuantity());
+	}
+	
 }
