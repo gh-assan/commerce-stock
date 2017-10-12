@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.commerce.stock.entity.SoldItem;
 import com.commerce.stock.entity.Stock;
 import com.commerce.stock.exception.OutdatedStockException;
 import com.commerce.stock.exception.ProductNotFoundException;
+import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.valueObject.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +23,9 @@ public class StockService {
 	private StockRepository repo;
 	
 	@Autowired
+	private SoldItemRepository itemRepo;
+	
+	@Autowired
 	ObjectMapper objectMapper;
 	
 
@@ -28,6 +34,7 @@ public class StockService {
 	}
 	
 	
+	@Transactional
 	public Stock updateStock(Stock stock) throws OutdatedStockException {
 		
 		Stock previous  = repo.findByProductId(stock.getProductId());
@@ -49,9 +56,25 @@ public class StockService {
 		
 		}
 		
-		stock.setTimestamp();
+		if (previous!= null)
+			previous = new Stock (previous);
 		
+		stock.setTimestamp();		
 		stock = repo.save(stock);
+		
+		if (previous!= null)
+			System.out.println(previous + " " + stock +  " " + (previous.getQuantity() > stock.getQuantity() ) );
+		
+		if (previous!= null && previous.getQuantity() > stock.getQuantity() ){
+			
+			SoldItem item = new SoldItem();
+			item.setProductId(stock.getProductId());
+			item.setTimestamp();
+			item.setQuantity(previous.getQuantity() - stock.getQuantity());
+			
+			itemRepo.save(item);
+		}
+		
 		
 		return stock;
 	}
@@ -70,4 +93,13 @@ public class StockService {
 		
 		return repo.findTop3ByOrderByQuantityDesc();
 	}
+	
+	public void deleteAll(){
+		
+		repo.deleteAll();
+		itemRepo.deleteAll();
+		
+		
+	}
+	
 }

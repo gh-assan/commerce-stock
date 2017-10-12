@@ -5,36 +5,24 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import com.commerce.stock.util.JsonDateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 @Entity
-public class Stock {
-	
-	String id;
-	
-	Date timestamp;
+public class SoldItem {
 	
 	@Id
-	String productId;
+	@GeneratedValue
+	long id;
 	
+	Date timestamp;
+	String productId;
 	Integer quantity;
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	//@JsonSerialize(using=JsonDateSerializer.class) 
+	
 	public Date getTimestamp() {
 		return timestamp;
 	}
-
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
@@ -50,44 +38,34 @@ public class Stock {
 	public String getProductId() {
 		return productId;
 	}
-
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-
 	public Integer getQuantity() {
 		return quantity;
 	}
-
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
-	@Override
-	public String toString() {
-		return "Stock [id=" + id + ", timestamp=" + timestamp + ", productId=" + productId + ", quantity=" + quantity
-				+ "]";
+	public long getId() {
+		return id;
 	}
-
-	public Stock(String id, String productId, Integer quantity) {
+	
+	public SoldItem(Date timestamp, String productId, Integer quantity) {
 		super();
-		this.id = id;
+		this.timestamp = timestamp;
 		this.productId = productId;
 		this.quantity = quantity;
 	}
 	
-	public Stock(Stock stock) {
-		super();
-		
-		if (stock != null ) {
-			this.id = stock.id;
-			this.productId =  stock.productId;
-			this.quantity =  stock.quantity;
-		}
+	public SoldItem( String productId, Integer quantity) {
+		this.productId = productId;
+		this.quantity = quantity;
+		this.setTimestamp();
 	}
 	
-	public Stock() {
+	
+	public SoldItem() {
 	}
-
 	
 }

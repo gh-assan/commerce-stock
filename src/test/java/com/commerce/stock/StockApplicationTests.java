@@ -77,6 +77,7 @@ public class StockApplicationTests {
 		
 		Stock stock = new Stock();
 		stock.setId("1234565");
+		stock.setProductId("1234565");
 		
 		String jsonStock = objectMapper.writeValueAsString(stock);
 				
