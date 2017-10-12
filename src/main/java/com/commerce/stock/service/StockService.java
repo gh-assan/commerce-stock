@@ -1,5 +1,7 @@
 package com.commerce.stock.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import com.commerce.stock.exception.OutdatedStockException;
 import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.repository.StockRepository;
+import com.commerce.stock.util.date.TimeSpanResolver;
 import com.commerce.stock.valueObject.Product;
+import com.commerce.stock.valueObject.SoldProduct;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +31,9 @@ public class StockService {
 	
 	@Autowired
 	ObjectMapper objectMapper;
+	
+	@Autowired
+	TimeSpanResolver timeSpanResolver;
 	
 
 	public StockService() {
@@ -89,10 +96,6 @@ public class StockService {
 		return new Product (stock);		
 	}
 	
-	public List<Stock> top3(){
-		
-		return repo.findTop3ByOrderByQuantityDesc();
-	}
 	
 	public void deleteAll(){
 		
