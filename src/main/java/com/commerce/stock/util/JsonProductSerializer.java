@@ -1,9 +1,6 @@
 package com.commerce.stock.util;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.commerce.stock.util.date.DateFormatter;
@@ -21,8 +18,6 @@ public class JsonProductSerializer extends JsonSerializer<Product>{
     public void serialize(Product product, JsonGenerator gen, SerializerProvider provider)
             throws IOException, JsonProcessingException {
         
-    	
-    	//dateFormat.setTimeZone(TimeZone.getTimeZone("UCT"));
     	
         gen.writeStartObject();
         gen.writeStringField("productId", product.getStock().getProductId());

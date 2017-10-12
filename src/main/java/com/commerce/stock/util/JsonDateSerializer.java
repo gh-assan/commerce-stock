@@ -1,9 +1,7 @@
 package com.commerce.stock.util;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

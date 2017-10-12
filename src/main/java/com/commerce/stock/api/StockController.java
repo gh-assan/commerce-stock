@@ -1,9 +1,6 @@
 package com.commerce.stock.api;
 
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +24,6 @@ import com.commerce.stock.entity.Stock;
 import com.commerce.stock.exception.HasCode;
 import com.commerce.stock.exception.OutdatedStockException;
 import com.commerce.stock.exception.ProductNotFoundException;
-import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.service.StatisticsService;
 import com.commerce.stock.service.StockService;
 import com.commerce.stock.valueObject.Product;
@@ -37,8 +33,6 @@ import com.commerce.stock.valueObject.StockStatistics;
 @RestController
 public class StockController {
 	
-	@Autowired
-	private StockRepository repo;
 	
 	@Autowired
 	private StockService service;
@@ -46,23 +40,9 @@ public class StockController {
 	@Autowired
 	private StatisticsService statisticsService;
 	
-	/*
-	@RequestMapping(value = "/stock",
-            method = RequestMethod.GET,
-            		produces = MediaType.APPLICATION_JSON_VALUE
-            		)
-    @ResponseStatus(HttpStatus.OK)
-	public
-    Stock getStock(@RequestParam("productId") String productId)  
-	{
-		return this.repo.findByProductId(productId);
-    }
-    */
 	
 	@RequestMapping(value = "/stock",
-            method = RequestMethod.GET,
-            		produces = MediaType.APPLICATION_JSON_VALUE
-            		)
+            		method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	public
     Product getProduct(@RequestParam("productId") String productId) throws ProductNotFoundException  
@@ -71,25 +51,17 @@ public class StockController {
     }
 	
 	@RequestMapping(value = "/updateStock",
-            method = RequestMethod.POST,
-            		produces = MediaType.APPLICATION_JSON_VALUE
-            		)
+            		method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public
     Stock updateStock(@RequestBody Stock stock) throws OutdatedStockException  
-	{
-		//throw new OutdatedStockException();
-		
-		//return this.repo.save(stock);
-		
+	{		
 		return  this.service.updateStock(stock);
     }
 	
 	
 	@RequestMapping(value = "/statistics",
-            method = RequestMethod.GET,
-            		produces = MediaType.APPLICATION_JSON_VALUE
-            		)
+            		method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	public
     StockStatistics statistics(@RequestParam("time") String time) throws Exception  

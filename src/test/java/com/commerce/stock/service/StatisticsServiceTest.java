@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.commerce.stock.entity.SoldItem;
 import com.commerce.stock.entity.Stock;
 import com.commerce.stock.repository.SoldItemRepository;
+import com.commerce.stock.util.date.Today;
 import com.commerce.stock.valueObject.SoldProduct;
 import com.commerce.stock.valueObject.StockStatistics;
 
@@ -35,10 +35,12 @@ public class StatisticsServiceTest {
 	@Autowired
 	private SoldItemRepository repo;
 	
+	@Autowired
+	private Today today;
+	
 	@Before
 	public void setup() {
 		stockService.deleteAll();
-
 	}
 	
 	
@@ -86,10 +88,8 @@ public class StatisticsServiceTest {
 		repo.save(item4);
 		repo.save(item5);
 		
-		LocalDate today = LocalDate.now().plusDays(1);
-		LocalDate yesterday = today.minusDays(1);
 		
-		List<SoldProduct> l = statisticsService.top3SoldProducts(java.sql.Date.valueOf(yesterday), java.sql.Date.valueOf(today));
+		List<SoldProduct> l = statisticsService.top3SoldProducts(today.get().getFrom(), today.get().getUntil());
 		
 		assertEquals(3,  l.size());
 		
