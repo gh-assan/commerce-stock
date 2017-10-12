@@ -16,7 +16,6 @@ import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.util.date.TimeSpanResolver;
 import com.commerce.stock.valueObject.Product;
-import com.commerce.stock.valueObject.SoldProduct;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,8 +50,6 @@ public class StockService {
 			try {
 				String oldTimeStamp = objectMapper.writeValueAsString(previous.getTimestamp());
 				String newtimestamp = objectMapper.writeValueAsString(stock.getTimestamp());
-				System.out.println(oldTimeStamp + " ==  " +newtimestamp);
-				System.out.println(previous.getTimestamp() + " ==  " +stock.getTimestamp());
 				if (!oldTimeStamp.equals(newtimestamp)) {					
 					throw new OutdatedStockException();
 				}

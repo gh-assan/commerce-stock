@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.commerce.stock.entity.Stock;
+import com.commerce.stock.util.JsonDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class StockStatistics {
 	
@@ -22,7 +24,7 @@ public class StockStatistics {
 		this.topSellingProducts = topSellingProducts;
 	}
 	
-	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getRequestTimestamp() {
 		return requestTimestamp;
 	}
