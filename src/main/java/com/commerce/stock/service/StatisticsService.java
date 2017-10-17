@@ -14,8 +14,8 @@ import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.util.date.DateRange;
 import com.commerce.stock.util.date.TimeSpanResolver;
-import com.commerce.stock.valueObject.SoldProduct;
-import com.commerce.stock.valueObject.StockStatistics;
+import com.commerce.stock.view.SoldProduct;
+import com.commerce.stock.view.StockStatistics;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service

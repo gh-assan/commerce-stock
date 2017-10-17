@@ -4,7 +4,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.commerce.stock.util.date.DateFormatter;
-import com.commerce.stock.valueObject.Product;
+import com.commerce.stock.view.Product;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;

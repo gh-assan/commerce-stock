@@ -1,33 +1,25 @@
 package com.commerce.stock.api;
 
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.commerce.stock.entity.Stock;
-import com.commerce.stock.exception.HasCode;
 import com.commerce.stock.exception.OutdatedStockException;
 import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.service.StatisticsService;
 import com.commerce.stock.service.StockService;
-import com.commerce.stock.valueObject.Product;
-import com.commerce.stock.valueObject.StockStatistics;
+import com.commerce.stock.validation.UpdateStockValidator;
+import com.commerce.stock.view.Product;
+import com.commerce.stock.view.StockStatistics;
 
 
 @RestController
@@ -41,11 +33,21 @@ public class StockController {
 	private StatisticsService statisticsService;
 	
 	
+	@Autowired
+	private UpdateStockValidator updateStockValidator;
+	
+	
+	@InitBinder("stock")
+    public void setupBinder(WebDataBinder binder) {
+        binder.addValidators(updateStockValidator);
+    }
+	
+	
 	@RequestMapping(value = "/stock",
             		method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	public
-    Product getProduct(@RequestParam("productId") String productId) throws ProductNotFoundException  
+    Product getProduct(@RequestParam(value ="productId", required = true) String productId) throws ProductNotFoundException  
 	{
 		return this.stockService.getProduct(productId);
     }
@@ -54,7 +56,7 @@ public class StockController {
             		method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public
-    Stock updateStock(@RequestBody Stock stock) throws OutdatedStockException  
+    Stock updateStock(@Validated @RequestBody Stock stock) throws OutdatedStockException  
 	{		
 		return  this.stockService.updateStock(stock);
     }
@@ -69,21 +71,5 @@ public class StockController {
 		return statisticsService.stockStatistics(time);
     }
 	
-
-	@ExceptionHandler
-	@ResponseBody
-	public ResponseEntity<Object> exceptionHandler(Exception e, HttpServletResponse response) throws IOException {
-	    
-		Map<String,String> responseBody = new HashMap<>();
-		 responseBody.put("message",e.getMessage());
-	        
-		
-		if (e instanceof HasCode ) {
-			return new ResponseEntity<Object>(responseBody,  ((HasCode) e).getCode() );
-		}
-		
-		return new ResponseEntity<Object>(responseBody, HttpStatus.BAD_REQUEST );
-		
-	}
 
 }

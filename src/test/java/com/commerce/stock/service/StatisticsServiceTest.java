@@ -17,8 +17,8 @@ import com.commerce.stock.entity.SoldItem;
 import com.commerce.stock.entity.Stock;
 import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.util.date.Today;
-import com.commerce.stock.valueObject.SoldProduct;
-import com.commerce.stock.valueObject.StockStatistics;
+import com.commerce.stock.view.SoldProduct;
+import com.commerce.stock.view.StockStatistics;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

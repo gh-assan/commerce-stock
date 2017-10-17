@@ -2,7 +2,7 @@ package com.commerce.stock.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ProductNotFoundException extends Exception implements HasCode{
+public class ProductNotFoundException extends BaseException implements HasCode{
 	
 	private static final long serialVersionUID = 1L;
 	

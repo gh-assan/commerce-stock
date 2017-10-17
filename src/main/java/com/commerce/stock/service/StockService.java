@@ -11,7 +11,7 @@ import com.commerce.stock.exception.ProductNotFoundException;
 import com.commerce.stock.repository.SoldItemRepository;
 import com.commerce.stock.repository.StockRepository;
 import com.commerce.stock.util.date.TimeSpanResolver;
-import com.commerce.stock.valueObject.Product;
+import com.commerce.stock.view.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -42,9 +42,11 @@ public class StockService {
 		
 		if (previous!= null ){
 			
+			/*Already checked by validation logic , but Check it again */
 			if ( stock.getTimestamp() == null || previous.getTimestamp().compareTo(stock.getTimestamp()) != 0) {					
 				throw new OutdatedStockException();
 			}
+			
 			
 			previous = new Stock (previous);
 			stock.setStockId(previous.getStockId());

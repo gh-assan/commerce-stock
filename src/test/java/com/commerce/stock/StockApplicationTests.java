@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -108,7 +109,7 @@ public class StockApplicationTests {
 		this.mockMvc.perform(post("/updateStock")
 				 .contentType(MediaType.APPLICATION_JSON)
 				 .content(jsonStock))
-				 .andExpect(status().is(204));
+				 .andExpect(status().is(HttpStatus.UNPROCESSABLE_ENTITY.value()));
 		
 	}
 	

@@ -1,4 +1,4 @@
-package com.commerce.stock.valueObject;
+package com.commerce.stock.view;
 
 public class SoldProduct {
 	
