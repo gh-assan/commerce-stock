@@ -4,11 +4,23 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+@Table(indexes= {
+		@Index(name="SoldItem_productId_idx" , columnList ="productId"),
+		@Index(name="SoldItem_timestamp_idx" , columnList ="timestamp")
+})
 public class SoldItem {
 	
 	@Id
@@ -16,7 +28,14 @@ public class SoldItem {
 	long id;
 	
 	Date timestamp;
+	
+	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 50)
 	String productId;
+	
+	@NotNull
+	@Min(0)
 	Integer quantity;
 	
 	

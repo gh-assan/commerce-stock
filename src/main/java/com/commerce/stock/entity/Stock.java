@@ -5,21 +5,47 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.commerce.stock.util.JsonDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
+@Table(indexes= {
+		@Index(name="Stock_productId_idx" , columnList ="productId"),
+		@Index(name="Stock_id_idx" , columnList ="id")
+})
 public class Stock {
 	
+	@Id
+	@GeneratedValue
+	@JsonIgnore
+	Long stockId;
+	
+	@NotBlank
+	@NotNull
+	@Size(min = 1, max = 50)
 	String id;
 	
 	Date timestamp;
 	
-	@Id
+	@NotBlank
+	@NotNull
+	@Size(min = 1, max = 50)
 	String productId;
 	
+	@NotNull
+	@Min(0)
 	Integer quantity;
 	
 	public String getId() {
@@ -83,10 +109,19 @@ public class Stock {
 			this.id = stock.id;
 			this.productId =  stock.productId;
 			this.quantity =  stock.quantity;
+			this.stockId = stock.getStockId();
 		}
 	}
 	
 	public Stock() {
+	}
+
+	public Long getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(Long stockId) {
+		this.stockId = stockId;
 	}
 
 	

@@ -72,8 +72,11 @@ public class StockApplicationTests {
 	public void PostStockUpdate() throws Exception {
 		
 		Stock stock = new Stock();
+		
 		stock.setId("1234565");
 		stock.setProductId("1234565");
+		stock.setQuantity(1);
+		
 		
 		String jsonStock = objectMapper.writeValueAsString(stock);
 				

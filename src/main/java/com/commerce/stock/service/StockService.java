@@ -47,6 +47,7 @@ public class StockService {
 			}
 			
 			previous = new Stock (previous);
+			stock.setStockId(previous.getStockId());
 		}
 				
 		stock.setTimestamp();		
