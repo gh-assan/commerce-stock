@@ -40,14 +40,7 @@ public class StockService {
 		
 		Stock previous  = stockRepository.findByProductId(stock.getProductId());
 		
-		if (previous!= null ){
-			
-			/*Already checked by validation logic , but Check it again */
-			if ( stock.getTimestamp() == null || previous.getTimestamp().compareTo(stock.getTimestamp()) != 0) {					
-				throw new OutdatedStockException();
-			}
-			
-			
+		if (previous!= null ){			
 			previous = new Stock (previous);
 			stock.setStockId(previous.getStockId());
 		}
@@ -55,9 +48,6 @@ public class StockService {
 		stock.setTimestamp();		
 		stock = stockRepository.save(stock);
 		
-//		if (previous!= null)
-//			System.out.println(previous + " " + stock +  " " + (previous.getQuantity() > stock.getQuantity() ) );
-//		
 		
 		if (previous!= null && previous.getQuantity() > stock.getQuantity() ){
 			

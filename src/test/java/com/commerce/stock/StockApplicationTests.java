@@ -70,7 +70,7 @@ public class StockApplicationTests {
 	}
 	
 	@Test
-	public void PostStockUpdate() throws Exception {
+	public void shouldUpdatePost() throws Exception {
 		
 		Stock stock = new Stock();
 		
@@ -90,7 +90,7 @@ public class StockApplicationTests {
 	
 	
 	@Test
-	public void PostStockMultiUpdateNullTimastamp() throws Exception {
+	public void ShouldUpdateStockWithNullTimastamp() throws Exception {
 		
 		Stock stock = new Stock();
 		
@@ -146,7 +146,7 @@ public class StockApplicationTests {
 	}
 	
 	@Test
-	public void StatisticsGetTest() throws Exception {
+	public void ShouldGetStatisticsTest() throws Exception {
 						
 		this.mockMvc.perform(get("/statistics?time=lastMonth")
 							 .contentType(MediaType.APPLICATION_JSON))
@@ -159,7 +159,7 @@ public class StockApplicationTests {
 	}
 	
 	@Test
-	public void StockGetTest() throws Exception {
+	public void  shouldGetStockByProductIdTest() throws Exception {
 						
 		this.mockMvc.perform(get("/stock?productId=p23")
 							 .contentType(MediaType.APPLICATION_JSON))
@@ -183,5 +183,23 @@ public class StockApplicationTests {
 				 .contentType(MediaType.APPLICATION_JSON))
 				 .andExpect(status().isOk());
 
+	}
+	
+	@Test
+	public void ShouldNotUpdateStockNegativeValueTest() throws Exception {
+						
+		Stock stock = new Stock();
+		
+		stock.setId("00033");
+		stock.setProductId("p23");
+		stock.setQuantity(-100);
+		
+		String jsonStock = objectMapper.writeValueAsString(stock);
+				
+		this.mockMvc.perform(post("/updateStock")
+							 .contentType(MediaType.APPLICATION_JSON)
+							 .content(jsonStock))
+				.andExpect(status().is(HttpStatus.UNPROCESSABLE_ENTITY.value()));
+		
 	}
 }

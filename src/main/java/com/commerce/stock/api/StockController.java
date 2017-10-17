@@ -66,7 +66,7 @@ public class StockController {
             		method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	public
-    StockStatistics statistics(@RequestParam("time") String time) throws Exception  
+    StockStatistics statistics(@RequestParam(value ="time", required = true) String time) throws Exception  
 	{
 		return statisticsService.stockStatistics(time);
     }

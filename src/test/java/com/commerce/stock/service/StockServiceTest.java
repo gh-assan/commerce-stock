@@ -49,29 +49,9 @@ public class StockServiceTest {
 		assertEquals(1, stockService.soldItemsCount());
 	
 	}
-	
-	@Test
-	public void InvalidTimeStampTest() throws Exception {
-		
-		Stock stock1 = new Stock("000011","top11",10);
-		Stock stock2 = new Stock("000011","top11",20);
-		
-		stock1 = stockService.updateStock(stock1);
-		stock2.setTimestamp(stock1.getTimestamp());  
-		
-		
-		stock1.setQuantity(15);				
-		stock1 = stockService.updateStock(stock1);
-		
-		try {
-			stockService.updateStock(stock2);
-			fail( "Update should throw exception" );
-		}catch (OutdatedStockException e) {
-		}
 				
-		
 	
-	}
+	
 	
 	@Test
 	public void updateTransactionTest() throws Exception {
