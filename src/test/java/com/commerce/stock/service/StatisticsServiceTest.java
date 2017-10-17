@@ -33,7 +33,7 @@ public class StatisticsServiceTest {
 	
 	
 	@Autowired
-	private SoldItemRepository repo;
+	private SoldItemRepository soldItemRepository;
 	
 	@Autowired
 	private Today today;
@@ -81,12 +81,12 @@ public class StatisticsServiceTest {
 		SoldItem item4 = new SoldItem("p4" , 4);
 		SoldItem item5 = new SoldItem("p5" , 5);
 		
-		repo.save(item1);
-		repo.save(item11);
-		repo.save(item2);
-		repo.save(item3);
-		repo.save(item4);
-		repo.save(item5);
+		soldItemRepository.save(item1);
+		soldItemRepository.save(item11);
+		soldItemRepository.save(item2);
+		soldItemRepository.save(item3);
+		soldItemRepository.save(item4);
+		soldItemRepository.save(item5);
 		
 		
 		List<SoldProduct> l = statisticsService.top3SoldProducts(today.get().getFrom(), today.get().getUntil());

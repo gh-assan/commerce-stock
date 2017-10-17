@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +21,11 @@ import com.commerce.stock.entity.SoldItem;
 public class SoldItemRepositoryTest {
 	
 	@Autowired
-	private SoldItemRepository repo;
+	private SoldItemRepository soldItemRepository;
 	
 	@After
 	public void clean() {
-		repo.deleteAll();
+		soldItemRepository.deleteAll();
 	}
 	
 	@Test
@@ -40,17 +39,17 @@ public class SoldItemRepositoryTest {
 		SoldItem item4 = new SoldItem("p4" , 4);
 		SoldItem item5 = new SoldItem("p5" , 5);
 		
-		repo.save(item1);
-		repo.save(item11);
-		repo.save(item2);
-		repo.save(item3);
-		repo.save(item4);
-		repo.save(item5);
+		soldItemRepository.save(item1);
+		soldItemRepository.save(item11);
+		soldItemRepository.save(item2);
+		soldItemRepository.save(item3);
+		soldItemRepository.save(item4);
+		soldItemRepository.save(item5);
 		
 		LocalDate today = LocalDate.now().plusDays(1);
 		LocalDate yesterday = today.minusDays(1);
 		
-		List<Object[]> l = repo.top3SoldProducts(java.sql.Date.valueOf(yesterday), java.sql.Date.valueOf(today));
+		List<Object[]> l = soldItemRepository.top3SoldProducts(java.sql.Date.valueOf(yesterday), java.sql.Date.valueOf(today));
 		
 		assertEquals(3,  l.size());
 		

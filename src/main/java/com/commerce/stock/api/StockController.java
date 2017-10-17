@@ -35,7 +35,7 @@ public class StockController {
 	
 	
 	@Autowired
-	private StockService service;
+	private StockService stockService;
 	
 	@Autowired
 	private StatisticsService statisticsService;
@@ -47,7 +47,7 @@ public class StockController {
 	public
     Product getProduct(@RequestParam("productId") String productId) throws ProductNotFoundException  
 	{
-		return this.service.getProduct(productId);
+		return this.stockService.getProduct(productId);
     }
 	
 	@RequestMapping(value = "/updateStock",
@@ -56,7 +56,7 @@ public class StockController {
     public
     Stock updateStock(@RequestBody Stock stock) throws OutdatedStockException  
 	{		
-		return  this.service.updateStock(stock);
+		return  this.stockService.updateStock(stock);
     }
 	
 	
