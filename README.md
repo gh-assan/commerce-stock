@@ -13,22 +13,20 @@ This application is build using latest version of spring boot , Java 8
 
 The provided end points : 
 
-● POST /updateStock
-● GET /stock?productId=p23
-● GET /statistics?time=[today,lastMonth]
+1. POST /updateStock
+2. GET /stock?productId=p23
+3. GET /statistics?time=[today,lastMonth]
 
 
 
 ## Notes
 
-● To post new record timestamp is not required in the request
-● In case you want to update exsiting stock , then you should provide the latest timastamp which we can have from 
+1. To post new record timestamp is not required in the request
+2. In case you want to update exsiting stock , then you should provide the latest timastamp which we can have from 
   the GET request result , and if you do provide the correct timestamp the request will fail with status code 204
-● If the new quantity is less than the old one , it is considerd as sale   
-● The spec of the task is not clear , and this forced me to ask a lot of questions 
-● during my last read I foun You get in return: status-code 204 , I return the status code as 204 , but I do not know if you mean return json with status message inside it.
-● As I said in my email I see that sending the stock change is much better and will simplify the task	
-
+3. If the new quantity is less than the old one , it is considerd as sale   
+4. As I said in my email I see that sending the stock change is much better and will simplify the task	
+5- The application is not perfect yet , there are some points which I did not fix yet , like exceptions handling
 
 ## Installation
 
@@ -52,7 +50,7 @@ run the applicatio using
 
 Example:
 
-● POST /updateStock
+1. POST /updateStock
 
 ```
 {
@@ -63,8 +61,9 @@ Example:
 }
 ```
 
-● GET /stock?productId=p23
-● GET /statistics?time=lastMonth
+2. GET /stock?productId=p23
+3. GET /statistics?time=lastMonth
+4. GET /statistics?time=today
 
 ## Run Tests
 

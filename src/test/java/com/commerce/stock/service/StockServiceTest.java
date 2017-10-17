@@ -1,8 +1,6 @@
 package com.commerce.stock.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.commerce.stock.entity.Stock;
-import com.commerce.stock.exception.OutdatedStockException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
